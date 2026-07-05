@@ -3,4 +3,5 @@
     <File Path="compose.yaml" />
   </Folder>
   <Project Path="Az204.Api/Az204.Api.csproj" />
+  <Project Path="Az204.Functions/Az204.Functions.csproj" />
 </Solution>
