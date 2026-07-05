@@ -1,0 +1,7 @@
+﻿services:
+  az204.api:
+    image: az204.api
+    build:
+      context: .
+      dockerfile: Az204.Api/Dockerfile
+
