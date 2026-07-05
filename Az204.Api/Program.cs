@@ -1,14 +1,29 @@
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options => options.AddScalarTransformers());
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference("/scalar", options =>
+    {
+        options
+            .WithTitle("API")
+            .WithTheme(ScalarTheme.DeepSpace)
+            .SortTagsAlphabetically()
+            .SortOperationsByMethod()
+            .PreserveSchemaPropertyOrder()
+            .ShowOperationId()
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+
+        options.DefaultOpenAllTags = false;
+    });
 }
 
 app.UseHttpsRedirection();
