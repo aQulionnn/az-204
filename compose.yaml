@@ -9,6 +9,14 @@
       - "5000:8080"
       - "5001:8081"
 
+  azure-functions:
+    image: az204.functions
+    build:
+      context: .
+      dockerfile: Az204.Functions/Dockerfile
+    ports:
+      - "7071:8080"
+
   redis:
     container_name: redis
     image: redis:latest
