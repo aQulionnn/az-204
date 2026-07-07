@@ -10,9 +10,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.Azure.Data.Tables" Version="9.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.Azure.Storage.Blobs" Version="9.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.Azure.Storage.Queues" Version="9.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+        <PackageReference Include="Azure.Data.Tables" Version="12.11.0" />
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
+        <PackageReference Include="Azure.Storage.Queues" Version="12.27.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Azure" Version="1.14.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.9" />
         <PackageReference Include="Microsoft.OpenApi" Version="2.9.0" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.16.10" />

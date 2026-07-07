@@ -10,6 +10,7 @@
       - "5001:8081"
 
   azure-functions:
+    container_name: azure-functions
     image: az204.functions
     build:
       context: .
@@ -44,8 +45,6 @@
       - "10002:10002"
     volumes:
       - azurite-data:/data
-    environment:
-      - AZURITE_ACCOUNTS=staz204dev
     command: >
       azurite 
       --blobHost 0.0.0.0 
@@ -54,6 +53,7 @@
       --blobPort 10000 
       --queuePort 10001 
       --tablePort 10002
+      --skipApiVersionCheck
     depends_on:
       - api
         

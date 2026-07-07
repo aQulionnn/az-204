@@ -1,11 +1,25 @@
+using Azure.Data.Tables;
+using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Azure;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration.GetConnectionString("AzureBlobStorage"));
+    clientBuilder.AddQueueServiceClient(builder.Configuration.GetConnectionString("AzureQueueStorage"));
+    clientBuilder.AddTableServiceClient(builder.Configuration.GetConnectionString("AzureTableStorage"));
+});
+
 builder.Services.AddHealthChecks()
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!)
+    .AddAzureBlobStorage(serviceProvider => serviceProvider.GetRequiredService<BlobServiceClient>())
+    .AddAzureQueueStorage(serviceProvider => serviceProvider.GetRequiredService<QueueServiceClient>())
+    .AddAzureTable(serviceProvider => serviceProvider.GetRequiredService<TableServiceClient>());
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
