@@ -10,7 +10,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="9.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.9" />
         <PackageReference Include="Microsoft.OpenApi" Version="2.9.0" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.16.10" />
         <PackageReference Include="Scalar.AspNetCore.Microsoft" Version="2.16.10" />
