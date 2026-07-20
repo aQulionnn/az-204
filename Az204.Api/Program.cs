@@ -3,10 +3,29 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Azure;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<CosmosClient>(_ =>
+{
+    var options = new CosmosClientOptions
+    {
+        HttpClientFactory = () =>
+        {
+            HttpMessageHandler httpMessageHandler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = (req, cert, chain, errors) => true
+            };
+        
+            return new HttpClient(httpMessageHandler);
+        }
+    };
+        
+    return new CosmosClient(builder.Configuration.GetConnectionString("CosmosDb"), options);
+});
 
 builder.Services.AddAzureClients(clientBuilder =>
 {
@@ -19,7 +38,8 @@ builder.Services.AddHealthChecks()
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!)
     .AddAzureBlobStorage(serviceProvider => serviceProvider.GetRequiredService<BlobServiceClient>())
     .AddAzureQueueStorage(serviceProvider => serviceProvider.GetRequiredService<QueueServiceClient>())
-    .AddAzureTable(serviceProvider => serviceProvider.GetRequiredService<TableServiceClient>());
+    .AddAzureTable(serviceProvider => serviceProvider.GetRequiredService<TableServiceClient>())
+    .AddAzureCosmosDB(serviceProvider => serviceProvider.GetRequiredService<CosmosClient>());
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
