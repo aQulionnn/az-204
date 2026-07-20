@@ -8,6 +8,10 @@
     ports:
       - "5000:8080"
       - "5001:8081"
+    depends_on:
+      - redis
+      - azurite
+      - cosmos-db
 
   azure-functions:
     container_name: azure-functions
@@ -25,8 +29,6 @@
       - "6379:6379"
     volumes:
       - redis-data:/data
-    depends_on:
-      - api
 
   redis-insight:
     container_name: redis-insight
@@ -54,8 +56,6 @@
       --queuePort 10001 
       --tablePort 10002
       --skipApiVersionCheck
-    depends_on:
-      - api
 
   cosmos-db:
     container_name: cosmos-db
